@@ -345,21 +345,36 @@ class DataFrame:
         dat[0]
         return fila
 
-#     def sort_index(axis, ascending)
-#
-#         if ascendig ==true:
-#             n = len(indice)
-#             for i in range(n-1):       # <-- bucle padre
-#                 for j in range(n-1-i): # <-- bucle hijo
-#                     if indice[j] > indice[j+1]:
-#                         indice[j], indice[j+1] = incice[j+1], indice[j]
-#         else
-#             n = len(indice)
-#             for i in range(n-1):       # <-- bucle padre
-#                 for j in range(n-1-i): # <-- bucle hijo
-#                     if indice[j] > indice[j+1]:
-#                         indice[j], indice[j+1] = incice[j+1], indice[j]
-#
+    def sort_index(axis, ascending):
+        
+        '''Creo un df desordenado
+        >>> df = DataFrame({'T3':[5,6],'T1':[1,2],'T2':[1,2]})
+        >>> df #print(df)
+        {'T3': [5,6], 'T1': [1,2], 'T2': [1,2]}'''
+        '''Ordenar las columnas asendentemente
+        >>> df.sort_index(axis=1, ascending=True)
+        {'T1': [1,2], 'T2': [3,4], 'T3': [5,6]}'''
+        '''Ordemar las columnas decendentemente
+        >>> df.sort_index(axis=1, ascending=False)
+        {'T3': [5,6], 'T2': [1,2], 'T1': [3,4]}        
+        '''
+        
+        if axis == 1:
+            keys=df.keys()
+            sorted_keys=sorted(keys)
+            sorted_df={}
+            if ascending == True:
+                for key in sorted_keys:
+                    sorted_df[key]=df[key]
+            else:
+                for key in reversed(sorted_keys):
+                    sorted_df[key]=df[key]
+            df=sorted_df
+            print(df)
+            
+        #else:
+            #compañero
+
 
     # DataFrame.sort_index()
 
@@ -482,3 +497,6 @@ def read_csv(arch, sep=','):
 
             data[titulos[i]].append(elem)
     return DataFrame(data)
+
+import doctest
+doctest.testmod(verbose=True)
